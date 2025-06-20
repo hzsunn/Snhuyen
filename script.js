@@ -1,5 +1,5 @@
 let password = "";
-const correctPassword = "131099";
+const correctPassword = "24052025";
 const passwordInput = document.getElementById("password");
 
 function addNumber(number) {
@@ -18,7 +18,7 @@ function clearPassword() {
 
 function checkPassword() {
   if (password === correctPassword) {
-    alert("Mật khẩu đúng! Chẩn bị đón bất ngờ nè!!");
+    alert("Đúng rồi. Mời em lắng nghe anh nói!!");
     window.location.href = "sinhnhat.html";
   } else {
     passwordInput.classList.add("shake");
