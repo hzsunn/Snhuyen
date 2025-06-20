@@ -1,5 +1,5 @@
 let password = "";
-const correctPassword = "24052025";
+const correctPassword = "240525";
 const passwordInput = document.getElementById("password");
 
 function addNumber(number) {
