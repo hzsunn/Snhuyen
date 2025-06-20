@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       audio.play().catch((error) => {
         console.error('Lỗi phát nhạc:', error);
-        alert('Vui lòng bật âm thanh trên trình duyệt để nghe nhạc sinh nhật!');
+        alert('Vui lòng bật âm thanh trên trình duyệt để nghe nhạc');
       });
 
       if (typeof startFireworks === 'function') {
@@ -90,5 +90,21 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       console.error('Lỗi khi mở quà:', error);
     }
+    function createHeartEffects() {
+  for (let i = 0; i < 30; i++) {
+    const heart = document.createElement("div");
+    heart.classList.add("heart-particle");
+    heart.style.left = `${Math.random() * 100}vw`;
+    heart.style.top = `${Math.random() * 100}vh`;
+    heart.style.animationDelay = `${Math.random() * 5}s`;
+    heart.style.backgroundColor = `hsl(${Math.random() * 20 + 330}, 80%, ${Math.random() * 20 + 60}%)`;
+    document.body.appendChild(heart);
+  }
+}
+
+window.addEventListener("load", () => {
+  createHeartEffects();
+
   });
 });
+
