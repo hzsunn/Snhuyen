@@ -3,7 +3,7 @@ const correctPassword = "24052025";
 const passwordInput = document.getElementById("password");
 
 function addNumber(number) {
-  if (password.length < 6) {
+  if (password.length < 8) {
     password += number;
     passwordInput.value = password;
     passwordInput.classList.add("active");
