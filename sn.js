@@ -51,7 +51,7 @@ envelope.addEventListener('click', function (event) {
 });
 
 document.getElementById('nextButton').addEventListener('click', function () {
-    window.location.href = 'banh.html';
+    window.location.href = 'https://hzsunn.github.io/test/index.html';
 });
 
 window.onload = function () {
