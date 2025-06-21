@@ -1,4 +1,4 @@
-function startFireworks(canvas) {
+function startHearts(canvas) {
   const ctx = canvas.getContext("2d");
   if (!ctx) {
     console.error("Không thể lấy context của canvas!");
@@ -12,99 +12,54 @@ function startFireworks(canvas) {
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
-  let particles = [];
+  let hearts = [];
 
-  function createFirework() {
+  function createHeart() {
     const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height / 2;
-    const colors = ['#ff0', '#f0f', '#0ff', '#f00', '#0f0'];
-    for (let i = 0; i < 100; i++) {
-      particles.push({
-        x, y,
-        vx: (Math.random() - 0.5) * 4,
-        vy: (Math.random() - 0.5) * 4,
-        alpha: 1,
-        color: colors[Math.floor(Math.random() * colors.length)]
-      });
-    }
+    const y = canvas.height + 20; // bắt đầu từ dưới cùng
+    const size = Math.random() * 10 + 10;
+    const color = `hsl(${Math.random() * 360}, 100%, 70%)`;
+    const speed = Math.random() * 1 + 0.5;
+
+    hearts.push({ x, y, size, color, speed, alpha: 1, angle: 0 });
+  }
+
+  function drawHeart(x, y, size, color, alpha, angle) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.scale(size / 20, size / 20);
+    ctx.beginPath();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
+    ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(0, -3, -5, -15, -10, -15);
+    ctx.bezierCurveTo(-25, -15, -25, 10, 0, 20);
+    ctx.bezierCurveTo(25, 10, 25, -15, 10, -15);
+    ctx.bezierCurveTo(5, -15, 0, -3, 0, 0);
+    ctx.fill();
+    ctx.restore();
   }
 
   function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((p, i) => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.alpha -= 0.01;
-      if (p.alpha <= 0) particles.splice(i, 1);
-      else {
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fill();
+
+    hearts.forEach((h, i) => {
+      h.y -= h.speed;
+      h.alpha -= 0.005;
+      h.angle += 0.01;
+
+      if (h.alpha <= 0 || h.y + h.size < 0) {
+        hearts.splice(i, 1);
+      } else {
+        drawHeart(h.x, h.y, h.size, h.color, h.alpha, h.angle);
       }
     });
 
-    if (Math.random() < 0.05) createFirework();
+    if (Math.random() < 0.2) createHeart(); // Tăng số lượng tim
+
     requestAnimationFrame(update);
   }
 
   update();
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  const giftBtn = document.getElementById('giftBtn');
-  const slider = document.querySelector('.slider');
-  const hbdText = document.getElementById('hbdText');
-  const cake = document.querySelector('.cake');
-  const audio = document.getElementById('birthday-audio');
-  const canvas = document.getElementById('fireworks');
-
-  giftBtn.addEventListener('click', () => {
-    try {
-      giftBtn.style.display = 'none';
-      setTimeout(() => {
-        hbdText.classList.remove('hidden');
-        console.log('Hiển thị chữ chúc mừng');
-      }, 0);
-      setTimeout(() => {
-        slider.classList.remove('hidden');
-        console.log('Hiển thị slider');
-      }, 200);
-      setTimeout(() => {
-        cake.classList.remove('hidden');
-        console.log('Hiển thị bánh');
-      }, 400);
-
-      audio.play().catch((error) => {
-        console.error('Lỗi phát nhạc:', error);
-        alert('Vui lòng bật âm thanh trên trình duyệt để nghe nhạc');
-      });
-
-      if (typeof startFireworks === 'function') {
-        startFireworks(canvas);
-        console.log('Bắt đầu pháo hoa');
-      } else {
-        console.error('Hàm startFireworks không tồn tại.');
-      }
-    } catch (error) {
-      console.error('Lỗi khi mở quà:', error);
-    }
-    function createHeartEffects() {
-  for (let i = 0; i < 30; i++) {
-    const heart = document.createElement("div");
-    heart.classList.add("heart-particle");
-    heart.style.left = `${Math.random() * 100}vw`;
-    heart.style.top = `${Math.random() * 100}vh`;
-    heart.style.animationDelay = `${Math.random() * 5}s`;
-    heart.style.backgroundColor = `hsl(${Math.random() * 20 + 330}, 80%, ${Math.random() * 20 + 60}%)`;
-    document.body.appendChild(heart);
-  }
-}
-
-window.addEventListener("load", () => {
-  createHeartEffects();
-
-  });
-});
-
