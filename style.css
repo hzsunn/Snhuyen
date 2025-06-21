@@ -197,6 +197,20 @@ input#password.shake {
 .submit:active {
   transform: scale(0.95);
 }
+/* Hiệu ứng chuyển màu khi load */
+@keyframes fadeInPink {
+  0% {
+    background-color: white;
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    background-color: #ff66b2;
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 
 @keyframes glowSubmit {
   0%, 100% {
