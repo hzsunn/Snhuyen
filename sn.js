@@ -60,3 +60,4 @@ window.onload = function () {
     setTimeout(() => {
         envelope.classList.remove('closed');
     }, 1000);
+};
